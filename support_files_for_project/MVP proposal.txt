@@ -1,0 +1,46 @@
+--Dojo Tweets project proposal--
+
+--Goals--
+    1. Fully complete Dojo Tweets to be added to a portofolio.  User minimum standards listed in email from Jason.     
+        *Full CRUD
+        *Complex database relationships
+        *API integration (stripe for eCommerce as an example, etc)
+        *AJAX
+        *Git collaboration
+        *Responsive (optional, but recommended) 
+        *Deployment
+    2. Design project with SQLAlchemy and MVC
+    3. Further refine knowledge of Git using branches and merges. 
+    4. Find a viable API to incorporate into the project. 
+
+--Tech Used--
+    1. HTML
+    2. CSS
+    3. JQuery
+    4. Python
+    5. Flask
+    6. SqlAlchemy
+    7. SQLite or SQL
+    8. AJAX 
+    9. (Find an API for the project) Look into Dropbox as an idea?
+
+--Workflow & Responsibilities--
+    1. Implement the last few aspects into SQLAlchemy and modularize code. 
+    2. Begin working on front end so new features and AJAX can be implemented. (figure out design ideas.  Bootstrap or raw dev) 
+    3. Work on backend and new features. 
+    4. Test code along the way, but do a full feature test once project seems completed. 
+    5. Deploy project into AWS
+
+--Page feature list--
+
+(Login/Registration)
+    1. Give this some front end pizzazz, but this should be pretty straight forward.  Use code from previous assignments to implement.  ISport has a pretty fleshed out login page already. 
+
+(User Dashboard)	
+	1. Header should have an Home/Account/Logout
+    2. display tweets, but allow user to decide how they want to be sorted.  Use a page redirect attached to a hyper link to accomplish the task. 
+	3. Each tweet can be liked and the amount of likes will display below the tweet. 
+	4. Logged in user has the option to delete the tweet. 
+	5. Clicking a users name will redirect to a new page showing that users tweet history without allowing non logged in user to modify information except to like or comment. 
+	6. Clicking on "who liked the tweet" will redirect to a new page showing the tweet and the alias and Name of each of the users who liked it.  
+
