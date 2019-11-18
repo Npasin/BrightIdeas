@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Idea</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='./css.css')}}">      
+</head>
+<body>
+    <div class="idea">
+    <p><h2>Edit your Idea</h2>   <a href="/userpage">Go Back</a></p>
+    
+    <form action="/confirm_idea_edit/{{idea_content['idea_id']}}" id="idea" method="POST">
+        <textarea cols="43" rows="7" name="idea_edit">{{ idea_content["content"] }}</textarea><br>
+        <button type="submit">Confirm Edit</button>
+    </form>
+    
+    </div>
+    {% with messages = get_flashed_messages() %}     <!-- declare a variable called messages -->
+    {% if messages %}                            <!-- check if there are any messages -->
+        {% for message in messages %}            <!-- loop through the messages -->
+            <p style="color:red">{{message}}</p>                   <!-- display each message in a paragraph tag -->
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='./css.css')}}">      
+    <title>Registration</title>
+</head>
+<body>
+    <div class="index_div">
+    <h1>Registration</h1>
+    <form action="/register" method="POST">
+        <label>First Name: </label> <input type="text" name="fname"><br><br>
+        <label>Last Name: </label> <input type="text" name="lname"><br><br>
+        <label>Email: </labe><input type="text" name="email"><br><br>
+        <label>Password: </label> <input type="password" name="pass"><br><br>
+        <label>Confirm Password: </label> <input type="password" name="confirmpass"><br><br>
+        <button type="submit">Register</button>
+    </form>
+    {% with messages = get_flashed_messages(category_filter=["registration"]) %}    
+    {% if messages %}                           
+        {% for message in messages %}           
+            <p style="color:red">{{message}}</p>               
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+    </div>    
+    <div class="index_div">
+    <h1>Log-in</h1>
+    <form action="/login" method="POST">
+        <label>Email: </label><input type="text" name="email"><br><br>
+        <label>Password: </label><input type="password" name="pass"><br><br>
+        <button type="submit">Log In</button>
+    </form>
+    {% with messages = get_flashed_messages(category_filter=["login"]) %}    
+    {% if messages %}                           
+        {% for message in messages %}           
+            <p style="color:red">{{message}}</p>               
+        {% endfor %}
+    {% endif %}
+    {% endwith %}    
+    </div>
+</body>
+</html>

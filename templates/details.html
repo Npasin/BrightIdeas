@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Idea Details</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='./css.css')}}">      
+</head>
+<body>
+    <div class="idea">
+        <h1>Idea Details</h1>
+        <a href="/userpage">Go Back</a></p>
+        <br><br>
+        <h3>Author: {{idea.author.f_name}} {{idea.author.l_name}}</h3><br>
+        <h4>idea:</h4>
+        <h3>{{idea.content}}</h3>
+        <br><hr><br>
+    <h3>People who liked this idea:</h3>
+    <table>
+        <tbody>
+        {% for user in idea.liked_by %}
+        <tr>
+            <td>{{user.f_name}} {{userl_name}}</td>
+        </tr>
+        {% endfor %}        
+        </tbody>
+    </table>
+    <br>
+    <h5><p>idea was liked {{idea.liked_by|length}} times</p></h5>
+    </div>
+</body>
+</html>

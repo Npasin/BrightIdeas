@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Idea Details</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='./css.css')}}">  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+</head>
+<body>
+    <div class="idea">
+        <h1>All users:</h1>
+    </div>
+
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in user_list %}
+            {% if user.user_id != session["user_id"]["id"] %} 
+            <tr>
+                <td>{{ user.f_name }} {{ user.l_name }}</td>
+                <td>{{  user.email }}</td>
+                <td>
+                    <!-- {% if user["id"] in following %}
+                        <p><a href="/unfollow/{{user['id']}}">Unfollow</a>
+                    {% else %}
+                        <p><a href="/follow/{{user['id']}}">Follow</a>
+                    {% endif %}                      -->
+                </td>                 
+            </tr>
+            {% endif %}
+            {% endfor %}
+            {% for user in user_list %}
+            {% if user.user_id == session["user_id"]["id"] %}
+            <tr>
+                <td>{{ user.f_name }} {{ user.l_name }}</td>
+                <td>{{  user.email }}</td>
+                <td><p>(You)</p></td>
+            </tr>
+            {% endif %}                        
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="idea" href="/userpage">Go Back</a>
+</body>
+</html>
