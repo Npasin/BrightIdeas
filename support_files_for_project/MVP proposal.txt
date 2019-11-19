@@ -26,6 +26,7 @@
 	10. Bootstrap
 
 --Workflow & Responsibilities--
+
     1. Implement the last few aspects into SQLAlchemy and modularize code. 
     2. Begin working on front end so new features and AJAX can be implemented use bootstrap. 
     3. Work on backend and new features. 
@@ -35,7 +36,7 @@
 	Nick modularize code and change names from tweets to ideas, also add admin into users table. 
 	Both work on figuring out how self join tables work in SQLAlchemy
 	Nick work on AJAX for login/Registration page. 
-	Bryan work Bootstrap for front end (build out generic template) use AJAX for post tweets. 
+	Bryan work on Bootstrap for front end (build out generic template) use AJAX for post tweets. 
 	Bryan work on commnets and messages
 	Nick accounts page
 	First person to complete above projects start researching dropbox API
@@ -55,18 +56,31 @@
 	3. Each tweet can be liked and the amount of likes will display below the tweet. 
 	4. Logged in user has the option to delete the tweet. 
 	5. Clicking a users name will redirect to a new page showing that users tweet history without allowing non logged in user to modify information except to like or comment. 
-	6. Clicking on "who liked the tweet" will redirect to a new page showing the tweet, alias, and name of each of the users who liked it.  
+	6. Add a hyper link under tweet so users can view comments on the tweet  
+    7. Add side bar sections that show friends lists and blocked lists. 
 
 
+(Comments page)
+    1. Header should have same as Dashboard
+    2. Top of the page should have the tweet showing the numer of likes below.
+    3. The remainder of the page should show comments about the tweet. 
+    4. If possible add comments to comments and collapse comments that go too deep
+    5. add form field so users can input comments on that page(limit character count to tweet size).
 
-(Notes from meeting)
-	1. Messaging system between "friends" that is not directly attached to tweets maybe add dropbox api to this. 
-	2. DropBox api seems like a good idea
-	3. Create a friends group, make recipient of friend invite approve before creating relatioship. 
-	4. Block List for people who blow ass. Block them from having any user interaction.  Don't blame us if someone gets murdered.  
-	5. Make an admin account add option to user table. 
-	6. Change view who liked this tweet to viewing comments on tweets
-	7. Really focus on figuring out how to make self join tables work in SQLAlchemy
+(Friends/Block/Private Messaging/Account info)
+    1. Header should be the same 
+    2. Primary focus on this page should be around private Messaging
+    3. Friends list and Block list should be scrollable drop down menu's on the side. 
+    4. Think of a way so messaging can only be done if you select a user's name instead of typing in any name you want. 
+    5. Block/Ban list should be straigtforward, add user to list and that user can no longer contact you. 
+    6. Incorporate DropBox api here. Hopefully this will allow large file sharing between friends. 
+    7. Not sure if we should add account info here or not. (If not create a simple account info page with minimal form manipulation) 
+
+
+(General notes)
+	1. Create a friends group, make recipient of friend invite approve before creating relatioship. 
+	2. Make an admin account add option to user table. 
+	3. Really focus on figuring out how to make self join tables work in SQLAlchemy
 
 
 (Optional features)
