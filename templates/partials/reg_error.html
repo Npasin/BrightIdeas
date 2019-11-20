@@ -1,0 +1,32 @@
+{% if fname_val == False %}
+<br>
+<p>First name must contain only letters and be at least two characters long.</p>
+{% endif %}
+
+{% if lname_val == False %}
+<br>
+<p>Last name must contain only letters and be at least two characters long.</p>
+{% endif %}
+
+{% if email_format == False %}
+<p>Invalid Email</p>
+{% endif %}
+
+{% if email_exists == True %}
+<p>Email is use.</p>
+{% endif %}
+{% if email_exists == False %}
+<p>Email Available</p>
+{% endif %}
+
+{% if pw_check == False %}
+<p>Password must have at least 5 characters, including one number, one uppercase and one lowercase letter, and one symbol.</p>
+<br>
+{% endif %}
+
+{% if pw_match == False %}
+<p>Passwords do not match.</p>
+{% endif %}
+{% if pw_match == True %}
+<p>Passwords match!</p>
+{% endif %}

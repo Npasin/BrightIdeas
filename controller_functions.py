@@ -15,10 +15,10 @@ def index():
 
 def new_acc():
     is_valid = True
-    if not request.form['fname'].isalpha() or not len(request.form['fname']) >= 1:
+    if not request.form['fname'].isalpha() or not len(request.form['fname']) >= 2:
         is_valid = False
         flash("First name can only contain letters", "registration")
-    if not request.form['lname'].isalpha() or not len(request.form['lname']) >= 1:
+    if not request.form['lname'].isalpha() or not len(request.form['lname']) >= 2:
         is_valid = False
         flash("Last name can only contain letters", "registration")
     if not password_reg.match(request.form["pass"]):
@@ -49,9 +49,44 @@ def new_acc():
         return redirect("/userpage")
     return redirect("/")
 
+def reg_fname():
+    is_valid = True
+    if not request.form['fname'].isalpha() or not len(request.form['fname']) >= 2:
+        is_valid = False
+    return render_template("partials/reg_error.html", fname_val=is_valid)
+
+def reg_lname():
+    is_valid = True
+    if not request.form['lname'].isalpha() or not len(request.form['lname']) >= 2:
+        is_valid = False
+    return render_template("partials/reg_error.html", lname_val=is_valid)    
+
+def reg_email_check():
+    email_format = True
+    if not EMAIL_REGEX.match(request.form["email"]):
+        email_format = False
+        return render_template("partials/reg_error.html", email_format=email_format)
+    email_exists = False
+    user = User.query.filter_by(email=request.form["email"]).all()
+    if user:
+        email_exists = True
+        return render_template("partials/reg_error.html", email_exists = email_exists)
+    return render_template("partials/reg_error.html", email_format=email_format, email_exists = email_exists)
+
+def reg_pw():
+    pw_check = True
+    if not password_reg.match(request.form["pass"]):
+        pw_check = False
+    return render_template("partials/reg_error.html", pw_check=pw_check)
+
+def reg_pw_match():
+    pw_match = False
+    if request.form["pass"] == request.form["confirmpass"]:
+        pw_match = True
+    return render_template("partials/reg_error.html", pw_match = pw_match)
+
 def login():
     user = User.query.filter_by(email=request.form["email"]).all()
-
     if user:
         hashed_pw = user[0].password
         if bcrypt.check_password_hash(hashed_pw, request.form['pass']):
@@ -63,11 +98,16 @@ def login():
             print(session["user_id"])
             return redirect("/userpage")
         else:
-            flash("Invalid Password", "login")
-            return redirect("/")
+            login_pw = False
+            # flash("Invalid Password", "login")
+            # return redirect("/")
+            return render_template("partials/log_error.html", login_pw=login_pw)
     else:
-        flash("Email not in Database", "login")
-        return redirect("/")
+        login_email = False
+        print("test")
+        # flash("Email not in Database", "login")
+        # return redirect("/")
+        return render_template("partials/log_error.html", login_email=login_email)
 
 def logout():
     session.clear()
