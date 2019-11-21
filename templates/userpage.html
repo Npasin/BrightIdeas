@@ -9,7 +9,7 @@
 </head>
 <body>
     <p>Welcome {{ user_data.f_name }}   <a href="/users">Users</a> <a href="/logout">Logout</a></p>
-    <!-- <a href="/followers/{{user_data['id']}}">Followers</a>  -->
+    <a href="/followers/{{user_data['id']}}">Followers</a>
 
 
     <form action="/create_idea" id="idea" method="POST">
