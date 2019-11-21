@@ -240,48 +240,36 @@ def details(idea_id):
 def users():
     if "user_id" not in session:
         return redirect("/")
-
+    current_user = User.query.get(session["user_id"]["id"])
     user_list = User.query.all()
 
-    return render_template("users.html", user_list = user_list)#, following = following_users)
+    return render_template("users.html", user_list = user_list, current_user=current_user)
 
-# @app.route("/follow/<following_id>")
-# def follow(following_id):
-#     if "user_id" not in session:
-#         return redirect("/")    
-    
-    # mysql = connectToMySQL("tweets")
-    # query = "INSERT INTO followers (follower, following) VALUES (%(follower)s, %(followed)s)"
-    # data = {
-    #     "follower": session["user_id"],
-    #     "followed": following_id
-    # }
+def add_friend(user_id):
+    current_user = User.query.get(session["user_id"]["id"])
+    friend_request = User.query.get(user_id)
+    friend_request.friends.append(current_user)
+    db.session.commit()
+    return redirect("/users")
 
-    # mysql.query_db(query, data)
-    # return redirect("/users")
-
-# @app.route("/unfollow/<following_id>")
-# def unfollow(following_id):
-#     if "user_id" not in session:
-#         return redirect("/")
-    
-    # mysql = connectToMySQL("tweets")
-    # query = "DELETE FROM followers WHERE follower = %(user_id)s and following = %(following_id)s"
-    # data = {
-    #     "user_id": session["user_id"],
-    #     "following_id": following_id
-    #     }
-    # mysql.query_db(query, data)
-    # return redirect("/users")
+def remove_friend(user_id):
+    if "user_id" not in session:
+        return redirect("/")
+    current_user = User.query.get(session["user_id"]["id"])
+    friend_to_remove = User.query.get(user_id)
+    friend_to_remove.friends.remove(current_user)
+    current_user.friends.remove(friend_to_remove)
+    db.session.commit()
+    return redirect("/users")
 
 # @app.route("/followers/<user_id>")
-# def followers(user_id):
+# def friends(user_id):
 #     if "user_id" not in session:
-#         return redirect("/")
+#         return redirect("/logout")
     # mysql = connectToMySQL("tweets")
     # query = "SELECT users.first_name, users.last_name, followers.follower FROM users JOIN followers on users.id = followers.follower WHERE followers.following = %(user_id)s"
     # data = {"user_id": session["user_id"]}
     # follower_data = mysql.query_db(query, data)
     # print(follower_data)
 
-    # return render_template("followers.html")#, followers=follower_data)
+    # return redirect("/users")#, followers=follower_data)

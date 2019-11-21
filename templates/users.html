@@ -26,14 +26,22 @@
             {% for user in user_list %}
             {% if user.user_id != session["user_id"]["id"] %} 
             <tr>
-                <td>{{ user.f_name }} {{ user.l_name }}</td>
-                <td>{{  user.email }}</td>
+                <td>{{ user.f_name }} {{ user.l_name }} {{user.user_id}}</td>
+                <td>{{  user.email }}
+                    {% for friend in user.friends %}
+                    {{friend.user_id}}
+                    {% endfor %}
+                </td>
                 <td>
-                    <!-- {% if user["id"] in following %}
-                        <p><a href="/unfollow/{{user['id']}}">Unfollow</a>
+                    {% if current_user in user.friends %}
+                            {% if user not in current_user.friends %} 
+                            <p>Request Pending</p>
+                            {% else %}
+                            <p><a href="/remove_friend/{{user.user_id}}">Remove Friend</a>
+                            {% endif %}
                     {% else %}
-                        <p><a href="/follow/{{user['id']}}">Follow</a>
-                    {% endif %}                      -->
+                        <p><a href="/add_friend/{{user.user_id}}">Request Friend</a>
+                    {% endif %}                      
                 </td>                 
             </tr>
             {% endif %}
@@ -41,7 +49,7 @@
             {% for user in user_list %}
             {% if user.user_id == session["user_id"]["id"] %}
             <tr>
-                <td>{{ user.f_name }} {{ user.l_name }}</td>
+                <td>{{ user.f_name }} {{ user.l_name }} {{user.user_id}}</td>
                 <td>{{  user.email }}</td>
                 <td><p>(You)</p></td>
             </tr>
