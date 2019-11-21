@@ -1,4 +1,6 @@
 /projectEnv
 /migrations
+/__pycache__
 twitter.db
 ideas.db
+
