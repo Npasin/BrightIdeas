@@ -243,7 +243,7 @@ def users():
     current_user = User.query.get(session["user_id"]["id"])
     user_list = User.query.all()
 
-    return render_template("users.html", user_list = user_list, current_user=current_user)#, following = following_users)
+    return render_template("users.html", user_list = user_list, current_user=current_user)
 
 def add_friend(user_id):
     current_user = User.query.get(session["user_id"]["id"])
