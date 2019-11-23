@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='./css.css')}}">      
 </head>
 <body>
-    <p>Welcome {{ user_data.f_name }}   <a href="/users">Users</a> <a href="/logout">Logout</a></p>
+    <p>Welcome <a href="/userprofile/{{user_data.user_id}}">{{ user_data.f_name }}</a>   <a href="/users">Users</a> <a href="/logout">Logout</a></p>
     <a href="/followers/{{user_data['id']}}">Followers</a>
 
 
