@@ -43,6 +43,7 @@ def new_acc():
         session["user_id"] = {
                 "first": new_user.f_name,
                 "last": new_user.l_name,
+                "email":new_user.email,
                 "id": new_user.user_id}
         print(session["user_id"])
         print("Account creation successful!")
@@ -93,27 +94,74 @@ def login():
             session["user_id"] = {
                 "first": user[0].f_name,
                 "last": user[0].l_name,
+                "email":user[0].email,
                 "id": user[0].user_id}
             print("Login Sucessful")
             print(session["user_id"])
             return redirect("/userpage")
         else:
-            login_pw = False
-            # flash("Invalid Password", "login")
-            # return redirect("/")
-            return render_template("partials/log_error.html", login_pw=login_pw)
+            flash("Invalid Password", "login")
+            return redirect("/")
     else:
-        login_email = False
-        print("test")
-        # flash("Email not in Database", "login")
-        # return redirect("/")
-        return render_template("partials/log_error.html", login_email=login_email)
+        flash("Email not in Database", "login")
+        return redirect("/")
 
 def logout():
     session.clear()
     return redirect("/")
 
-def user_page():
+def userprofile(user_id):
+    current_user = User.query.get(user_id)
+    return render_template ("userprofile.html", user=current_user)
+
+def editprofile():
+    id = request.form["user_id"]
+    if int(id) != session["user_id"]["id"]:
+        return redirect ("/logout")
+    user = User.query.get(id)
+    if request.form["email"] != session["user_id"]["email"]:
+        if not EMAIL_REGEX.match(request.form["email"]):
+            flash("Invalid Email Address", "update_profile")
+        else:
+            user.email = request.form["email"]
+            print("email changed")
+            session["user_id"] = {
+                "first": user.f_name,
+                "last": user.l_name,
+                "email":request.form["email"],
+                "id": user.user_id}
+            flash("Email Updated", "update_profile")
+    if request.form["profile"] and request.form["profile"] != user.profile:
+        if len(request.form["profile"]) > 1600:
+            flash("Profile must be less than 1600 characters", "update_profile")
+        else:
+            user.profile = request.form["profile"]
+            print("profile changed")
+            flash("Profile Updated", "update_profile")
+    db.session.commit()
+    return redirect(f"/userprofile/{id}")
+
+def editpassword():
+    id = request.form["user_id"]
+    if int(id) != session["user_id"]["id"]:
+        return redirect ("/logout")
+    user = User.query.get(id)
+    hashed_pw = user.password
+    if bcrypt.check_password_hash(hashed_pw, request.form['current_pass']):
+        if not password_reg.match(request.form["new_pass"]):
+            flash("Password should be at least 5 characters, have one number, one uppercase and one lowercase letter, and one symbol", "update_pass")
+        if request.form["new_pass"] != request.form["confirm_pass"]:
+            flash("Passwords do not match", "update_pass")
+        else:
+            new_pw_hash = bcrypt.generate_password_hash(request.form["new_pass"])
+            user.password = new_pw_hash
+            db.session.commit()
+            flash("Password changed!", "update_pass")
+    else:
+        flash("Incorrect Password", "update_pass")
+    return redirect(f"/userprofile/{id}")
+
+def userpage():
     if "user_id" not in session:
         return redirect("/")
     user_data = User.query.filter_by(user_id = session["user_id"]["id"]).all()

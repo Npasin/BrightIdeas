@@ -19,6 +19,7 @@ class User(db.Model):
     email = db.Column(db.String(45))
     password = db.Column(db.String(255))
     admin_status = db.Column(db.Integer)
+    profile = db.Column(db.String(1600))
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
     liked_idea = db.relationship("Idea", secondary = "user_likes")
