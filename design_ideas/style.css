@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'adequateextra_light';
+    src: url('adequate-extralight-webfont.woff2') format('woff2'),
+         url('adequate-extralight-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+* {
+    font-family: sans-serif;
+    margin: 0px auto;
+}
+
+.wrapper {
+    background-color: #0e76da;
+    height: 980px;
+}
+
+#greeting {
+    margin-left: 100px;
+    padding-top: 70px;
+    vertical-align: top;
+    
+}
+
+    #greeting h1 {
+        font-size: 96px;
+        font-weight: 100;
+        font-family: "adequateextra_light";
+        color: #ff9700;
+    }
+
+    #greeting p {
+        font-family: "adequateextra_light";
+        color: #ffb54B;
+    }
+
+#get_in {
+    display: block;
+    margin: 100px auto 0px auto;
+    width: 400px;
+    background-color: #ffB54B;
+    border-radius: 16px;
+    text-align: center;
+}
+
+#get_in h2 {
+    margin: 16px 0px 8px 0px;
+}
+
+#splitter {
+    width: 65%;
+    border: 1px inset;
+    color: black;
+}
+
+.log_reg {
+    background-color: white;
+    padding: 8px 4px;
+    margin: 8px 4px;
+    border: none;
+    border-radius: 6px;
+}
+
+    .log_reg::placeholder{
+        color: grey;
+        text-align: center;
+    }
+
+#email_field {
+    width: 348px;
+}
+
+.log_reg_but {
+    width: 100px;
+    padding: 5px 0px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: #00498F;
+    box-shadow: 1px 1px  #ffB54B;
+    color: white;
+    cursor: pointer; 
+}
+
+
+
+

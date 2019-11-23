@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div id="greeting">
+            <h1>Ideas!</h1>
+            <p>A creative place to collaborate and share information</p>
+        </div>
+        <div id="get_in">
+            <h2>Login</h2>
+            <form action="/login" id="login_form" method="POST">
+                <input type="text" name="email" placeholder="Email" class="log_reg">
+                <input type="password" name="pass" placeholder="Password" class="log_reg">
+                <button id="login_submit" type="submit" class="log_reg_but">Log In</button>
+            </form>
+        <hr id="splitter">
+            <h2>Register</h2>
+            <form action="/register" id="reg_form" method="POST">
+                <input class="log_reg" type="text" name="fname" placeholder="First Name">     
+                <input class="log_reg" type="text" name="lname" placeholder="Last Name">       
+                <input id="email_field" class="log_reg" type="text" name="email" placeholder="Email">               
+                <input class="log_reg" type="password" name="pass" placeholder="Password">                
+                <input class="log_reg" type="password" name="confirmpass" placeholder="Confirm Password">              
+                <button type="submit" id="reg_submit" class="log_reg_but">Register</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
