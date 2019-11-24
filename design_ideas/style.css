@@ -12,14 +12,15 @@
     margin: 0px auto;
 }
 
-.wrapper {
+body {
     background-color: #0e76da;
-    height: 980px;
 }
 
+/* Login Page */
+
 #greeting {
-    margin-left: 100px;
-    padding-top: 70px;
+    margin-left: 6%;
+    padding-top: 3%;
     vertical-align: top;
     
 }
@@ -38,7 +39,7 @@
 
 #get_in {
     display: block;
-    margin: 100px auto 0px auto;
+    margin: 5% auto 0% auto;
     width: 400px;
     background-color: #ffB54B;
     border-radius: 16px;
@@ -73,16 +74,59 @@
 }
 
 .log_reg_but {
-    width: 100px;
+    width: 125px;
     padding: 5px 0px;
     margin-bottom: 20px;
     margin-top: 10px;
     border: none;
     border-radius: 6px;
     background-color: #00498F;
-    box-shadow: 1px 1px  #ffB54B;
     color: white;
     cursor: pointer; 
+}
+
+/* Users Page */
+
+.page_title {
+    display: inline-block;
+    margin: 2% 0% 0% 4%;
+    font-family: "adequateextra_light";
+    font-size: 48px;
+    font-weight: 100;
+    color: #ff9700;
+}
+
+.links {
+    display: inline-block;
+    vertical-align: top;
+    margin: 1.5% 0% 0% 75%;
+}
+
+    .links a {
+        text-decoration: none;
+        color: #FFB54B;
+        padding: 0px 5px;
+    }
+
+#board {
+    display: inline-block;
+    margin: 4% 0% 0% 20%;
+    width: 600px;
+    text-align: center;
+}
+
+.posted_ideas {
+    width: 500px;
+    height: 150px;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #FFB54B;
+    border-radius: 25px;
+    text-align: left;
+}
+
+.posted_ideas a {
+    margin: 
 }
 
 
