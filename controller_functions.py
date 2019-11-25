@@ -309,15 +309,3 @@ def remove_friend(user_id):
     current_user.friends.remove(friend_to_remove)
     db.session.commit()
     return redirect("/users")
-
-# @app.route("/followers/<user_id>")
-# def friends(user_id):
-#     if "user_id" not in session:
-#         return redirect("/logout")
-    # mysql = connectToMySQL("tweets")
-    # query = "SELECT users.first_name, users.last_name, followers.follower FROM users JOIN followers on users.id = followers.follower WHERE followers.following = %(user_id)s"
-    # data = {"user_id": session["user_id"]}
-    # follower_data = mysql.query_db(query, data)
-    # print(follower_data)
-
-    # return redirect("/users")#, followers=follower_data)
