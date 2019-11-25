@@ -11,7 +11,7 @@ def index():
         print("admin created")
         admin_pw_hash = bcrypt.generate_password_hash("admin")
         User.create_admin(admin_pw_hash)
-    return render_template("index.html")
+    return render_template("login_registration.html")
 
 def new_acc():
     is_valid = True
