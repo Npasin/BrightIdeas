@@ -42,6 +42,13 @@
             <div id="reg_error_pw"></div><div id="reg_error_pw_match"></div>
             <button type="submit" id="reg_submit" class="log_reg_but">Register</button>
         </form>
+        {% with messages = get_flashed_messages(category_filter=["registration"]) %}    
+        {% if messages %}                           
+            {% for message in messages %}           
+                <p style="color:red">{{message}}</p>               
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
     </div>
 </body>
 
