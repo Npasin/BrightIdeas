@@ -11,6 +11,11 @@ friends_table = db.Table("friends",
     db.Column("friendee_id", db.Integer, db.ForeignKey("users.user_id"), primary_key=True)
 )
 
+block_list = db.Table("blocked",
+    db.Column("blocker_id", db.Integer, db.ForeignKey("users.user_id"), primary_key=True),
+    db.Column("blockee_id", db.Integer, db.ForeignKey("users.user_id"), primary_key=True)
+)
+
 class User(db.Model):
     __tablename__ = "users"
     user_id = db.Column(db.Integer, primary_key = True)
@@ -28,6 +33,11 @@ class User(db.Model):
         primaryjoin=user_id==friends_table.c.friendee_id, 
         secondaryjoin=user_id==friends_table.c.friender_id,
         backref="friending")
+    blocked=db.relationship("User", 
+        secondary=block_list, 
+        primaryjoin=user_id==block_list.c.blockee_id, 
+        secondaryjoin=user_id==block_list.c.blocker_id,
+        backref="blocking")        
 
     def create_admin(self):
         admin = User(
