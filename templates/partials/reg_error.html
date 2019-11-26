@@ -1,22 +1,20 @@
 {% if fname_val == False %}
-<br>
-<p>First name must contain only letters and be at least two characters long.</p>
+<p>Names must contain only letters and be at least two characters.</p>
 {% endif %}
 
 {% if lname_val == False %}
-<br>
-<p>Last name must contain only letters and be at least two characters long.</p>
+<p>Names must contain only letters and be at least two characters.</p>
 {% endif %}
 
 {% if email_format == False %}
-<p>Invalid Email</p>
+<p>Invalid Email Format</p>
 {% endif %}
 
 {% if email_exists == True %}
-<p>Email is use.</p>
+<p style="color:red">Email is use.</p>
 {% endif %}
 {% if email_exists == False %}
-<p>Email Available</p>
+<p style="color:green">Email Available</p>
 {% endif %}
 
 {% if pw_check == False %}
@@ -25,8 +23,5 @@
 {% endif %}
 
 {% if pw_match == False %}
-<p>Passwords do not match.</p>
-{% endif %}
-{% if pw_match == True %}
-<p>Passwords match!</p>
+<p style="color:red">Passwords do not match.</p>
 {% endif %}
