@@ -34,11 +34,14 @@
         <form action="/register" id="reg_form" method="POST">
             <input id="reg_fname" class="log_reg" type="text" name="fname" placeholder="First Name">
             <input id="reg_lname" class="log_reg" type="text" name="lname" placeholder="Last Name">
-            <div id="reg_error_fname"></div><div id="reg_error_lname"></div>
+            <!-- <div id="reg_error_fname"></div><div id="reg_error_lname"></div> -->
             <input id="reg_email" class="log_reg email_field" type="text" name="email" placeholder="Email">
-            <div id="reg_error_email"></div>
+            <!-- <div id="reg_error_email"></div> -->
             <input id="reg_pw" class="log_reg" type="password" name="pass" placeholder="Password">
             <input id="reg_pw_match" class="log_reg" type="password" name="confirmpass" placeholder="Confirm Password">
+            <div id="reg_error_fname"></div><div id="reg_error_lname"></div>
+            <div id="reg_error_fname"></div><div id="reg_error_lname"></div>
+            <div id="reg_error_email"></div>
             <div id="reg_error_pw"></div><div id="reg_error_pw_match"></div>
             <button type="submit" id="reg_submit" class="log_reg_but">Register</button>
         </form>
