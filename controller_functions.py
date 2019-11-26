@@ -15,12 +15,15 @@ def index():
 
 def new_acc():
     is_valid = True
+    name_err = 0
     if not request.form['fname'].isalpha() or not len(request.form['fname']) >= 2:
         is_valid = False
-        flash("First name can only contain letters", "registration")
+        name_err = 1
+        flash("Names can contain only letters and be at least two characters", "registration")
     if not request.form['lname'].isalpha() or not len(request.form['lname']) >= 2:
         is_valid = False
-        flash("Last name can only contain letters", "registration")
+        if name_err == 1:
+            flash("Names can contain only letters and be at least two characters", "registration")
     if not password_reg.match(request.form["pass"]):
         is_valid = False
         flash("Password should be at least 5 characters, have one number, one uppercase and one lowercase letter, and one symbol", "registration")

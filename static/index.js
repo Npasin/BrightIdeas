@@ -8,7 +8,7 @@ $('#reg_fname').keyup(function(){
         data: data
     })
     .done(function(res){
-        $('#reg_error_fname').html(res) 
+        $('#reg_error_fname').html(res)
     })
 })
 $('#reg_lname').keyup(function(){
