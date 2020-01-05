@@ -1,0 +1,36 @@
+<div id="board">
+    <h2 id="board_greeting">What others are thinking</h2>
+    {% for idea in idea_data %}
+    <div class="posted_ideas triangle {{idea.idea_id}}" id="idea_feed">
+        {% if idea.author.user_id == user_data.user_id %} 
+            <button id="delete_button" class="{{idea.idea_id}}">X</button>
+        {% endif%}
+        <p>{{ idea.author.f_name}} {{idea.author.l_name}} wrote {{idea.content}} at {{idea.created_at.strftime('%Y-%m-%d')}}:</p>
+        <!-- {% if idea["time_now"] %}
+            just now
+            {% elif idea["time_since_seconds"] %}
+                {{idea["time_since_seconds"]}} seconds ago
+            {% elif idea["time_since_minutes"] %}
+                {{idea["time_since_minutes"]}} minutes ago
+            {% elif idea["time_since_hours"] %}
+                {{idea["time_since_hours"]}} hours ago
+            {% elif idea["time_since_days"] %}
+                {{idea["time_since_days"]}} days ago
+        {% endif %}
+        {% if idea["created_at"] != idea["updated_at"] %} 
+            (updated {{idea["updated_at"].strftime('%Y-%m-%d')}})
+        {% endif %} -->
+        {% if user_data in idea.liked_by %}
+            <button class="{{idea.idea_id}}" id="unlike">Unlike</button>
+        {% else %}
+            <button class="{{idea.idea_id}}" id="like">Like</button>
+        {% endif %} 
+        {% if idea.liked_by|length > 0 %}
+        <a href="/details/{{idea['idea_id']}}"><p id="display_likes">{{idea.liked_by|length}}</p></a>
+        {% endif %}
+        {% if idea.author.user_id == user_data.user_id %} 
+            <a href="/edit/{{idea['idea_id']}}" id="edit_idea" class="edit_content {{idea.idea_id}}">Edit</a>
+        {% endif %}
+    </div>   
+{% endfor %}    
+</div>

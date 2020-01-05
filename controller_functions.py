@@ -75,7 +75,8 @@ def reg_email_check():
     if user:
         email_exists = True
         return render_template("partials/reg_error.html", email_exists = email_exists)
-    return render_template("partials/reg_error.html", email_format=email_format, email_exists = email_exists)
+    if email_format == True and email_exists == False:
+        return render_template("partials/reg_error.html", email_exists = email_exists)# email_format=email_format, 
 
 def reg_pw():
     pw_check = True
@@ -114,29 +115,34 @@ def logout():
     return redirect("/")
 
 def userprofile(user_id):
-    current_user = User.query.get(user_id)
-    return render_template ("userprofile.html", user=current_user)
+    if "user_id" not in session:
+        return redirect("/logout")
+    view_user = User.query.get(user_id)
+    current_user = User.query.get(session["user_id"]["id"])
+    return render_template ("profile.html", user=view_user, cur_user = current_user)
 
 def editprofile():
     id = request.form["user_id"]
     if int(id) != session["user_id"]["id"]:
         return redirect ("/logout")
     user = User.query.get(id)
-    if request.form["email"] != session["user_id"]["email"]:
-        if not EMAIL_REGEX.match(request.form["email"]):
-            flash("Invalid Email Address", "update_profile")
-        else:
-            user.email = request.form["email"]
-            print("email changed")
-            session["user_id"] = {
-                "first": user.f_name,
-                "last": user.l_name,
-                "email":request.form["email"],
-                "id": user.user_id}
-            flash("Email Updated", "update_profile")
+    # if request.form["email"] != session["user_id"]["email"]:
+    #     if not EMAIL_REGEX.match(request.form["email"]):
+    #         flash("Invalid Email Address", "update_profile")
+    #     else:
+    #         user.email = request.form["email"]
+    #         print("email changed")
+    #         session["user_id"] = {
+    #             "first": user.f_name,
+    #             "last": user.l_name,
+    #             "email":request.form["email"],
+    #             "id": user.user_id}
+    #         flash("Email Updated", "update_profile")
     if request.form["profile"] and request.form["profile"] != user.profile:
         if len(request.form["profile"]) > 1600:
             flash("Profile must be less than 1600 characters", "update_profile")
+        if request.form["profile"] == " ":
+            user.profile = None
         else:
             user.profile = request.form["profile"]
             print("profile changed")
@@ -208,10 +214,9 @@ def userpage():
             # if td.seconds > 3599:
             #     tweet["time_since_hours"] = round (td.seconds / 3600)
 
-def validate_create_idea():
+def create_idea():
     if "user_id" not in session:
         return redirect("/")
-    print(request.form["idea_content"])
     is_valid = True
     if not request.form["idea_content"]:
         is_valid = False
@@ -219,7 +224,7 @@ def validate_create_idea():
     if len(request.form["idea_content"]) > 255:
         flash("Ideas must be less than 255 characters.")
         is_valid = False
-
+    
     if is_valid:
         new_idea = Idea(
                     content=request.form["idea_content"],
@@ -227,17 +232,26 @@ def validate_create_idea():
         db.session.add(new_idea)
         db.session.commit()
         flash("Idea saved!")
-
-    return redirect("/userpage")
+        user_data = User.query.filter_by(user_id = session["user_id"]["id"]).all()
+        idea_data = Idea.query.order_by(desc(Idea.created_at)).join(User).all()
+        return render_template("/partials/idea_feed.html", user_data = user_data[0], idea_data= idea_data)
 
 def delete_idea(idea_id):
     if "user_id" not in session:
         return redirect("/")
     delete_idea = Idea.query.get(idea_id)
+    print(delete_idea.content)
     if delete_idea.author.user_id == session["user_id"]["id"]:
         delete_idea.author.user_ideas.remove(delete_idea)
         db.session.commit()
-    return redirect("/userpage")
+    clean_empty = Idea.query.filter_by(author_id=None).all()
+    for clean in clean_empty:
+        db.session.delete(clean)
+        db.session.commit()
+    user_data = User.query.filter_by(user_id = session["user_id"]["id"]).all()
+    idea_data = Idea.query.order_by(desc(Idea.created_at)).join(User).all()
+    return render_template("partials/idea_feed.html", user_data = user_data[0], idea_data= idea_data)
+    # return redirect("/userpage")
 
 def edit_page(idea_id):
     if "user_id" not in session:
@@ -272,8 +286,10 @@ def like(idea_id):
     liked_idea = Idea.query.get(idea_id)
     current_user = User.query.get(session["user_id"]["id"])
     current_user.liked_idea.append(liked_idea)
+    user_data = User.query.filter_by(user_id = session["user_id"]["id"]).all()
+    idea_data = Idea.query.order_by(desc(Idea.created_at)).join(User).all()
     db.session.commit()
-    return redirect("/userpage")
+    return render_template("partials/idea_feed.html", user_data = user_data[0], idea_data= idea_data)
 
 def unlike(idea_id):
     if "user_id" not in session:
@@ -281,8 +297,10 @@ def unlike(idea_id):
     liked_idea = Idea.query.get(idea_id)
     current_user = User.query.get(session["user_id"]["id"])
     current_user.liked_idea.remove(liked_idea)    
+    user_data = User.query.filter_by(user_id = session["user_id"]["id"]).all()
+    idea_data = Idea.query.order_by(desc(Idea.created_at)).join(User).all()
     db.session.commit()
-    return redirect("/userpage")
+    return render_template("partials/idea_feed.html", user_data = user_data[0], idea_data= idea_data)
 
 def details(idea_id):
     idea_data = Idea.query.get(idea_id)
@@ -312,3 +330,8 @@ def remove_friend(user_id):
     current_user.friends.remove(friend_to_remove)
     db.session.commit()
     return redirect("/users")
+
+def refresh_feed():
+    user_data = User.query.filter_by(user_id = session["user_id"]["id"]).all()
+    idea_data = Idea.query.order_by(desc(Idea.created_at)).join(User).all()
+    return render_template("partials/idea_feed.html", user_data = user_data[0], idea_data= idea_data)

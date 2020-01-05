@@ -55,7 +55,7 @@ class Idea(db.Model):
     content = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now())
-    author_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable = False)
+    author_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))#, nullable = False)
     author = db.relationship("User", foreign_keys = [author_id], backref = "user_ideas", cascade = "all")
     liked_by = db.relationship("User", secondary = "user_likes")
     

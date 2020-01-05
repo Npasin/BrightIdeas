@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{user.f_name}}'s Profile</title>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='./style.css')}}"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='./userpage.js') }}"></script>  
+</head>
+<body>
+    <div class="links">
+        <a href="/userpage">Home</a>
+        <a href="/userprofile/{{cur_user.user_id}}">Account</a>
+        <a href="/users">Users</a>
+        <a href="/followers/{{user.user_id}}">Followers</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <h1 class="page_title">Ideas!</h1>
+    <div id="post_idea">
+        {% if session["user_id"]["id"] != user.user_id %}
+        <h2>{{user.f_name}} {{user.l_name}}'s Profile</h2>
+        {% elif session["user_id"]["id"] == user.user_id %}
+        <h2>Welcome, {{user.f_name}} {{user.l_name}}!</h2>
+        {% endif %}
+    </div>
+    <div class="profile_body">
+        <div class="profile_left">
+            <ul> 
+                <li><span class="category">Joined: </span><span class="text">{{user.created_at.strftime("%B, %Y")}}</span></li>
+                <!-- left uneditable for now, do we want people to change their login email? working code sitting in controller functions -->
+                <li><span class="category">Contact: </span><span class="text">
+                    {{user.email}}
+                </span></li>
+            <!-- </ul> -->
+            {% if session["user_id"]["id"] == user.user_id %}
+            <li>
+            <hr>
+            <form action="/editpassword" method="POST">
+                <input name="user_id" value={{user.user_id}} hidden>
+                <span class="category">Change Password:</span>
+                <!-- <br><br> -->
+                <table>
+                <tr>
+                    <td><label>Current Password: </label></td>
+                    <td><input class="input" type="password" name="current_pass"></td>
+                </tr>
+                <tr>
+                    <td><label>New Password: </label></td>
+                    <td><input class="input" type="password" name="new_pass"></td>
+                </tr>
+                <tr>
+                    <td><label>Confirm New Password: </label></td>
+                    <td><input class="input" type="password" name="confirm_pass"></td>
+                </tr>
+                </table>
+                <p><button type="submit" class="log_reg_but">Change Password</button></p>
+            </form>
+            {% endif %}
+            </li>
+            </ul>
+        {% with messages = get_flashed_messages(category_filter=["update_pass"]) %}    
+        {% if messages %}                           
+            {% for message in messages %}           
+                <p style="color:red">{{message}}</p>               
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        </div>
+        <div class="profile_right">
+            <p class="category">About {{user.f_name}}:</p>
+                {% if session["user_id"]["id"] != user.user_id %}
+                {% if user.profile %}
+                {{user.profile}}
+                {% else %}
+                <p class="posted_ideas">Who in the world is {{user.f_name}}? Ah, that's the great puzzle!</p>
+                {% endif %}
+                {% elif session["user_id"]["id"] == user.user_id %}
+                <form action="/editprofile" method="POST" id="profile"> 
+                <input name="user_id" value={{user.user_id}} hidden>
+                {% if user.profile %}
+                {%set profile = user.profile %}
+                {% else %}
+                {% set profile = "You haven't created a profile yet. Say something about yourself!" %}
+                {% endif %}
+                <textarea style="resize:none" class="posted_ideas" form="profile" rows="10" cols="50" placeholder="{{profile}}" name="profile"></textarea>
+                <br><br>
+                <p><button class="log_reg_but" type="submit">Update Profile</button></p>
+                {% endif %}
+                </form>
+                {% with messages = get_flashed_messages(category_filter=["update_profile"]) %}    
+                {% if messages %}                           
+                    {% for message in messages %}           
+                        <p style="color:red">{{message}}</p>               
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+        </div>
+    </div>
+</body>
+</html>

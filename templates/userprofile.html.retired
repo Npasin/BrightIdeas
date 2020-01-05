@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='./css.css')}}">  
+    <title>{{user.f_name}}'s Profile Page</title>
+</head>
+<body>
+    <h2>{{user.f_name}} {{user.l_name}}</h2>
+    <a href="/userpage">Go Back</a>
+    {{session["user_id"]}}
+    <p>Account details:</p>
+    {% if session["user_id"]["id"] != user.user_id %}
+        <p>Contact email: {{user.email}}</p>
+        <p>Profile:</p>
+        <p>
+            {% if user.profile %}
+            {{user.profile}}
+            {% else %}
+            {{user.f_name}} hasn't created a profile yet.
+            {% endif %}
+        </p>
+    {% elif session["user_id"]["id"] == user.user_id %}
+        <form action="/editprofile" method="POST" id="profile"> 
+            <input name="user_id" value={{user.user_id}} hidden>
+            <p>Contact Email: <input id="edit_email" type="text" name="email" value="{{user.email}}"></p>
+            <p>Profile: </p>
+            {% if user.profile %}
+            {%set profile = user.profile %}
+            {% else %}
+            {% set profile = "You haven't created a profile yet!" %}
+            {% endif %}
+            <textarea form="profile" rows="10" cols="50" placeholder="{{profile}}" name="profile"></textarea>
+            <p><button type="submit">Update Account</button></p>
+        </form>
+        {% with messages = get_flashed_messages(category_filter=["update_profile"]) %}    
+        {% if messages %}                           
+            {% for message in messages %}           
+                <p style="color:red">{{message}}</p>               
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form action="/editpassword" method="POST">
+            <input name="user_id" value={{user.user_id}} hidden>
+            <p>Change Password:</p>
+            <p><label>Current Password: </label> <input type="password" name="current_pass"></p>
+            <p><label>New Password: </label> <input type="password" name="new_pass"></p>
+            <p><label>Confirm New Password: </label> <input  type="password" name="confirm_pass"></p>
+            <p><button type="submit">Change Password</button></p>
+        </form>
+        {% with messages = get_flashed_messages(category_filter=["update_pass"]) %}    
+        {% if messages %}                           
+            {% for message in messages %}           
+                <p style="color:red">{{message}}</p>               
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    {% endif %}
+</body>
+</html>
